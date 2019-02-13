@@ -79,11 +79,12 @@
     $lOutput .= "\n" . OUTPUT_SUFFIX . "\n";
     $lOutput .= BLOCK_END;
 
+    $lNewHtaccess = '';
     if( $lHtaccess == '' ) {
         /**
          * No existing .htaccess file.
          */
-        file_put_contents( FILE_HTACCESS, $lOutput );
+        $lNewHtaccess = $lOutput;
     } else {
         /**
          * Existing .htaccess. Let's. Get. Mangling.
