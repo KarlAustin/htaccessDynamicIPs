@@ -23,7 +23,8 @@
         'htaccess:',
         'backup',
         'ipv6',
-        'compat'
+        'compat',
+        'litespeed',
     );
 
     $cOptions = getopt( $cOptionsShort, $cOptionsLong );
@@ -41,7 +42,7 @@
 
 
     define( 'BACKUP', isset( $cOptions['backup'] ) ? true : false );
-    define( 'COMPAT', isset( $cOptions['compat'] ) ? true : false );
+    define( 'COMPAT', ( isset( $cOptions['compat'] ) || isset( $cOptions['litespeed'] ) ) ? true : false );
     define( 'IPV6', isset( $cOptions['ipv6'] ) ? true : false );
 
     define( 'FILE_HOSTNAMES', $cOptions['hostnames'] );
