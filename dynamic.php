@@ -93,7 +93,7 @@
             $tStart = $lBlockStartPosition;
             $tEnd = $lBlockEndPosition + strlen( BLOCK_END );
             $lNewHtaccess = substr( $lHtaccess, 0, $tStart );
-            $lNewHtaccess .= "\n" . $lOutput;
+            $lNewHtaccess .= $lOutput;
             $lNewHtaccess .= "\n" . substr( $lHtaccess, $tEnd );
         } else {
             $lNewHtaccess = $lHtaccess . "\n" . $lOutput;
