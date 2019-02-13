@@ -109,7 +109,7 @@
         if( $lBlockStartPosition !== false ) {
             // There's an existing block that we need to replace
             $tStart = $lBlockStartPosition;
-            $tEnd = $lBlockEndPosition + strlen( BLOCK_END );
+            $tEnd = $lBlockEndPosition + strlen( BLOCK_END ) + 1;
             $lNewHtaccess = substr( $lHtaccess, 0, $tStart );
             $lNewHtaccess .= $lOutput;
             $lNewHtaccess .= "\n" . substr( $lHtaccess, $tEnd );
