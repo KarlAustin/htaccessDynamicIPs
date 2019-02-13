@@ -4,6 +4,12 @@
 
 This is a tool for querying DynamicDNS hostnames for their IPv4 (optionally IPv6) addresses and adding them to a .htaccess file to allow access to a resource.
 
+## Why?
+
+You might want to lock down the admin folder for Wordpress a bit more (and you really really should) or other software to only your contributors, but they don't all have static IP addresses and you don't want to go to the expense of a VPN setup.  DynamicDNS services are free or cheap, built in to most routers these days, or trivially easy to setup on a laptop etc.
+
+Unfortunately whilst Apache will let you add a hostname in to your .htaccess to allow it access it doesn't work in the way most users expect.  All it does is check that the reverse DNS (rDNS) for the IP address of a visitor, matches the hostname you've put in there - and that's triviallly easy for an attacker to manipulate.  It doesn't lookup the hostname entered and find the IP address and match against that.
+
 ## Features
 
 + Supports IPv4 & IPv6
