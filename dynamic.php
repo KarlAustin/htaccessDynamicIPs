@@ -106,5 +106,4 @@
         file_put_contents( FILE_HTACCESS . BACKUP_SUFFIX, $lHtaccess );
     }
 
-    echo $lNewHtaccess;
-//    echo $lOutput;
+    file_put_contents( FILE_HTACCESS,  $lNewHtaccess );
