@@ -13,6 +13,7 @@ This is a tool for querying DynamicDNS hostnames for their IPv4 (optionally IPv6
 + Won't overwrite contents of an existing .htaccess file
 + Can perform a backup of the .htaccess
 + Places comments in the .htaccess so you know which hostname an IP came from
++ Uses PHP validators to check the hostname before using it, and to check the returned IP addresses
 
 ## Usage
 
