@@ -11,9 +11,9 @@
      */
 
     /**
-     * This makes heavy use of arrays, it could use contactenated strings in places, but that would make inserting any
+     * This makes heavy use of arrays, it could use concatenated strings in places, but that would make inserting any
      * future processing steps (who knows) more difficult.  The cost of arrays will only be an issue with 1000s of
-     * entries - in which case, using .htaccess isn't the answer (get a VPN!)
+     * entries - in which case, using .htaccess and Dynamic DNS hostnames isn't the answer (get a VPN!)
      */
 
     include_once( 'app.cfg.php' );
@@ -49,6 +49,8 @@
      *
      * In theory dns_get_record could return multiple A or AAAA records per hostname, in practice it probably won't.
      *
+     * We don't trust the entries in the hostnames file, so we check to make sure they are considered valid.
+     *
      * Keeping v4 and v6 arrays separate in case we want to do anything different down the line
      */
     $lRecords4 = array();
@@ -68,6 +70,12 @@
         }
     }
 
+    /**
+     * Merge IPv4 and IPv6 arrays
+     *
+     * Iterate over each IP address, check to see if it is considered valid, add it, along with the hostname comment
+     * to the entries array.
+     */
     $lIPList = array_merge( $lRecords4, $lRecords6 );
     $lEntry = '';
     $lEntries = array();
@@ -79,6 +87,9 @@
         }
     }
 
+    /**
+     * Assemble final output to go in .htaccess file
+     */
     $lOutput = BLOCK_START . "\n";
     $lOutput .= OUTPUT_PREFIX . "\n";
     $lOutput .= join( "\n", $lEntries );
@@ -96,12 +107,14 @@
          * Existing .htaccess. Let's. Get. Mangling.
          */
         if( $lBlockStartPosition !== false ) {
+            // There's an existing block that we need to replace
             $tStart = $lBlockStartPosition;
             $tEnd = $lBlockEndPosition + strlen( BLOCK_END );
             $lNewHtaccess = substr( $lHtaccess, 0, $tStart );
             $lNewHtaccess .= $lOutput;
             $lNewHtaccess .= "\n" . substr( $lHtaccess, $tEnd );
         } else {
+            // No block, so we just put the block on the end
             $lNewHtaccess = $lHtaccess . "\n" . $lOutput;
         }
     }
@@ -113,4 +126,7 @@
         file_put_contents( FILE_HTACCESS . BACKUP_SUFFIX, $lHtaccess );
     }
 
+    /**
+     * Write out the new .htaccess file
+     */
     file_put_contents( FILE_HTACCESS,  $lNewHtaccess );
