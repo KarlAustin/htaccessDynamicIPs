@@ -55,12 +55,15 @@
     $lRecords6 = array();
     foreach( $lHostnames as $lHostname ) {
         $lHostname = trim( $lHostname );
-        if( ($tRecords4 = dns_get_record( $lHostname, DNS_A )) !== false ) {
-            $lRecords4 = array_merge( $lRecords4, $tRecords4 );
-        }
-        if( IPV6 ) {
-            if( ($tRecords6 = dns_get_record( $lHostname, DNS_AAAA )) !== false ) {
-                $lRecords6 = array_merge( $lRecords6, $tRecords6 );
+        // Don't trust what we're getting from users.
+        if( filter_var( $lHostname, FILTER_VALIDATE_DOMAIN, array( 'flags' => FILTER_FLAG_HOSTNAME ) ) ) {
+            if (($tRecords4 = dns_get_record( $lHostname, DNS_A )) !== false) {
+                $lRecords4 = array_merge( $lRecords4, $tRecords4 );
+            }
+            if (IPV6) {
+                if (($tRecords6 = dns_get_record( $lHostname, DNS_AAAA )) !== false) {
+                    $lRecords6 = array_merge( $lRecords6, $tRecords6 );
+                }
             }
         }
     }
@@ -70,7 +73,10 @@
     $lEntries = array();
     foreach( $lIPList as $lHost ) {
         $lIP = isset( $lHost['ipv6'] ) ? $lHost['ipv6'] : $lHost['ip'];
-        $lEntries[] = '#- ' . $lHost['host'] . "\n" . OUTPUT_ENTRY_PREFIX . ' ' . $lIP;
+        // Just because it came from a DNS response, does not mean it is safe. It's still external input.
+        if( filter_var( $lIP, FILTER_VALIDATE_IP, array( 'flags' => FILTER_FLAG_IPV4 && FILTER_FLAG_IPV6 ) ) ) {
+            $lEntries[] = '#- ' . $lHost['host'] . "\n" . OUTPUT_ENTRY_PREFIX . ' ' . $lIP;
+        }
     }
 
     $lOutput = BLOCK_START . "\n";
