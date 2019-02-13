@@ -70,7 +70,7 @@
     $lEntries = array();
     foreach( $lIPList as $lHost ) {
         $lIP = isset( $lHost['ipv6'] ) ? $lHost['ipv6'] : $lHost['ip'];
-        $lEntries[] = OUTPUT_ENTRY_PREFIX . ' ' . $lIP . ' #- ' . $lHost['host'];
+        $lEntries[] = '#- ' . $lHost['host'] . "\n" . OUTPUT_ENTRY_PREFIX . ' ' . $lIP;
     }
 
     $lOutput = BLOCK_START . "\n";
