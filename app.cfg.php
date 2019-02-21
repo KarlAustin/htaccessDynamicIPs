@@ -28,6 +28,14 @@
         'help'
     );
 
+    /**
+     * FILTER_VALIDATE_DOMAIN needs PHP7
+     */
+    if( PHP_MAJOR_VERSION < 7 ) {
+        echo 'Error: You need PHP 7.0 or newer to run this tool';
+        exit(-1);
+    }
+
     $cOptions = getopt( $cOptionsShort, $cOptionsLong );
 
     if( !isset( $cOptions['hostnames'] )
