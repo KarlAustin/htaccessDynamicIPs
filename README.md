@@ -21,6 +21,10 @@ Unfortunately whilst Apache will let you add a hostname in to your .htaccess to 
 + Places comments in the .htaccess so you know which hostname an IP came from
 + Uses PHP validators to check the hostname before using it, and to check the returned IP addresses
 
+## Requirements
+
++ PHP7
+
 ## Usage
 
 ```
